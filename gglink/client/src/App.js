@@ -4,13 +4,15 @@ import './App.css';
 import Register from './pages/Register';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
-import LobbyPage from './pages/LobbyPage'; // Importe a nova página
+import LobbyPage from './pages/LobbyPage';
+import CommunityList from './pages/CommunityList'; // Importe a lista de comunidades
+import CommunityDetailPage from './pages/CommunityDetailPage'; // Importe os detalhes da comunidade
 
 function App() {
   return (
     <Router>
       <div className="App">
-        {/* Navbar (pode ser um componente separado para evitar repetição) */}
+        {/* Navbar atualizada para incluir link de Comunidades */}
         <header className="header">
           <nav className="navbar">
             <div className="container">
@@ -18,6 +20,7 @@ function App() {
               <ul className="nav-links">
                 <li><Link to="/features">Recursos</Link></li>
                 <li><Link to="/how-it-works">Como Funciona</Link></li>
+                <li><Link to="/communities">Comunidades</Link></li> {/* Novo link */}
                 <li><Link to="/register">Cadastre-se</Link></li>
                 <li><Link to="/login">Login</Link></li>
               </ul>
@@ -28,7 +31,7 @@ function App() {
         <Routes>
           <Route path="/" element={
             <div className="landing-page-content">
-              {/* Conteúdo da Landing Page, como antes */}
+              {/* Conteúdo da Landing Page */}
               <main className="main-content">
                 <section className="hero-section">
                   <div className="container">
@@ -96,8 +99,9 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/lobby/:id" element={<LobbyPage />} /> {/* Nova rota para a página do lobby */}
-          {/* Adicione outras rotas conforme necessário */}
+          <Route path="/lobby/:id" element={<LobbyPage />} />
+          <Route path="/communities" element={<CommunityList />} /> {/* Nova rota */}
+          <Route path="/community/:id" element={<CommunityDetailPage />} /> {/* Nova rota */}
         </Routes>
       </div>
     </Router>

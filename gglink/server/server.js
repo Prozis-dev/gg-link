@@ -4,12 +4,13 @@ const http = require('http');
 const socketIo = require('socket.io');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const jwt = require('jsonwebtoken'); // Para verificar o token JWT na conexão WebSocket
+const jwt = require('jsonwebtoken');
 
 const feedbackRoutes = require('./routes/feedbackRoutes');
 const authRoutes = require('./routes/authRoutes');
 const lobbyRoutes = require('./routes/lobbyRoutes');
-const User = require('./models/User'); // Importe o modelo de Usuário para buscar o nome
+const communityRoutes = require('./routes/communityRoutes');
+const User = require('./models/User');
 
 const app = express();
 const server = http.createServer(app);
@@ -40,72 +41,55 @@ mongoose.connect(MONGO_URI)
   .then(() => console.log('Conectado ao MongoDB!'))
   .catch(err => console.error('Erro ao conectar ao MongoDB:', err));
 
-// Usar as rotas de autenticação
+// Rotas
 app.use('/api/auth', authRoutes);
-// Usar as rotas de lobbies
 app.use('/api/lobbies', lobbyRoutes);
-// Usar as rotas de feedback
 app.use('/api/feedback', feedbackRoutes);
+app.use('/api/communities', communityRoutes);
 
-// ----- Socket.IO para Comunicação em Tempo Real -----
-// Aprimore a autenticação do Socket.IO
+// Middleware de autenticação para Socket.IO
 io.use(async (socket, next) => {
-  const token = socket.handshake.auth.token; // Pega o token do handshake
-  if (!token) {
-    return next(new Error('Autenticação necessária para WebSocket.'));
-  }
+  const token = socket.handshake.auth.token;
+  if (!token) return next(new Error('Autenticação necessária para WebSocket.'));
+
   try {
     const decoded = jwt.verify(token, jwtSecret);
-    socket.user = decoded.user; // Anexa o payload do usuário ao socket
-    // Opcional: Buscar o nome de usuário do banco de dados para o chat
+    socket.user = decoded.user;
     const user = await User.findById(decoded.user.id);
-    if (!user) {
-      return next(new Error('Usuário não encontrado.'));
-    }
-    socket.username = user.username; // Adiciona o username ao socket
+    if (!user) return next(new Error('Usuário não encontrado.'));
+    socket.username = user.username;
     next();
   } catch (err) {
     next(new Error('Token de autenticação inválido.'));
   }
 });
 
-
+// Lógica de Socket.IO
 io.on('connection', (socket) => {
   console.log(`Cliente conectado via Socket.IO: ${socket.id} (Usuário: ${socket.username})`);
 
-  // Evento para entrar em um lobby específico
+  // ======== LOBBY ========
   socket.on('joinLobby', async (lobbyId) => {
-    // Verifique se o lobby existe e se o usuário tem permissão para entrar (opcional, já feito na API REST)
-    // Para fins do chat, vamos apenas permitir a junção se o lobbyId for válido
     if (!mongoose.Types.ObjectId.isValid(lobbyId)) {
       socket.emit('lobbyError', 'ID de lobby inválido.');
       return;
     }
-
-    // Deixa o socket entrar em uma "sala" específica para este lobby
     socket.join(lobbyId);
-    socket.currentLobby = lobbyId; // Armazena o lobby atual do usuário no socket
+    socket.currentLobby = lobbyId;
 
     console.log(`${socket.username} (${socket.id}) entrou no lobby: ${lobbyId}`);
-
-    // Informa aos outros membros do lobby que um novo usuário entrou
     io.to(lobbyId).emit('userJoinedLobby', {
       userId: socket.user.id,
       username: socket.username,
       lobbyId: lobbyId,
       message: `${socket.username} entrou no lobby.`
     });
-
-    // Opcional: Enviar a lista atual de membros para o usuário que acabou de entrar
-    // (Ainda não implementado, mas é um próximo passo lógico)
   });
 
-  // Evento para sair de um lobby
   socket.on('leaveLobby', (lobbyId) => {
     if (socket.currentLobby === lobbyId) {
       socket.leave(lobbyId);
       console.log(`${socket.username} (${socket.id}) saiu do lobby: ${lobbyId}`);
-      // Informa aos outros membros do lobby que um usuário saiu
       io.to(lobbyId).emit('userLeftLobby', {
         userId: socket.user.id,
         username: socket.username,
@@ -116,18 +100,15 @@ io.on('connection', (socket) => {
     }
   });
 
-
-  // Evento para envio de mensagens de chat
   socket.on('sendMessage', (messageData) => {
     const { lobbyId, message } = messageData;
-    if (socket.currentLobby === lobbyId) { // Garante que a mensagem é para o lobby certo
+    if (socket.currentLobby === lobbyId) {
       const chatMessage = {
         userId: socket.user.id,
         username: socket.username,
         message: message,
         timestamp: new Date().toISOString()
       };
-      // Envia a mensagem apenas para a "sala" (lobby) específica
       io.to(lobbyId).emit('receiveMessage', chatMessage);
       console.log(`[LOBBY ${lobbyId}] ${socket.username}: ${message}`);
     } else {
@@ -135,21 +116,81 @@ io.on('connection', (socket) => {
     }
   });
 
-  // Manipular desconexão
+  // ======== COMUNIDADE ========
+  socket.on('joinCommunity', async (communityId) => {
+    if (!mongoose.Types.ObjectId.isValid(communityId)) {
+      socket.emit('communityError', 'ID de comunidade inválido.');
+      return;
+    }
+
+    socket.leaveAll(); // Sai de todas as salas anteriores
+    socket.join(`community-${communityId}`);
+    socket.currentRoom = `community-${communityId}`;
+
+    console.log(`${socket.username} (${socket.id}) entrou na comunidade: ${communityId}`);
+
+    io.to(`community-${communityId}`).emit('communityUserJoined', {
+      userId: socket.user.id,
+      username: socket.username,
+      communityId: communityId,
+      message: `${socket.username} entrou na comunidade.`
+    });
+  });
+
+  socket.on('leaveCommunity', (communityId) => {
+    if (socket.currentRoom === `community-${communityId}`) {
+      socket.leave(`community-${communityId}`);
+      console.log(`${socket.username} (${socket.id}) saiu da comunidade: ${communityId}`);
+      io.to(`community-${communityId}`).emit('communityUserLeft', {
+        userId: socket.user.id,
+        username: socket.username,
+        communityId: communityId,
+        message: `${socket.username} saiu da comunidade.`
+      });
+      delete socket.currentRoom;
+    }
+  });
+
+  socket.on('sendCommunityMessage', (messageData) => {
+    const { communityId, message } = messageData;
+    if (socket.currentRoom === `community-${communityId}`) {
+      const chatMessage = {
+        userId: socket.user.id,
+        username: socket.username,
+        message: message,
+        timestamp: new Date().toISOString()
+      };
+      io.to(`community-${communityId}`).emit('receiveCommunityMessage', chatMessage);
+      console.log(`[COMMUNITY ${communityId}] ${socket.username}: ${message}`);
+    } else {
+      socket.emit('communityError', 'Você não está nesta comunidade ou o ID é inválido.');
+    }
+  });
+
+  // ======== DESCONECTAR ========
   socket.on('disconnect', () => {
     console.log('Cliente desconectado:', socket.id);
-    // Se o usuário estava em um lobby, informa a saída
+
+    if (socket.currentRoom?.startsWith('community-')) {
+      const communityId = socket.currentRoom.replace('community-', '');
+      io.to(socket.currentRoom).emit('communityUserLeft', {
+        userId: socket.user.id,
+        username: socket.username,
+        communityId: communityId,
+        message: `${socket.username} desconectou da comunidade.`
+      });
+    }
+
     if (socket.currentLobby) {
       io.to(socket.currentLobby).emit('userLeftLobby', {
         userId: socket.user.id,
         username: socket.username,
         lobbyId: socket.currentLobby,
-        message: `${socket.username} desconectou.`
+        message: `${socket.username} desconectou do lobby.`
       });
     }
   });
 });
-
 
 server.listen(PORT, () => {
   console.log(`Servidor backend rodando na porta ${PORT}`);
