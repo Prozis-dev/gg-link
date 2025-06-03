@@ -1,0 +1,222 @@
+/* Dashboard.css */
+
+.dashboard-container {
+  min-height: 100vh;
+  background-color: var(--dark-background);
+  color: var(--light-text);
+  display: flex;
+  flex-direction: column; /* Para empilhar header, main e footer */
+}
+
+.dashboard-header {
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 15px 0;
+  position: sticky; /* Fixa o header no topo */
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 999; /* Acima do conteúdo, abaixo do modal */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.dashboard-header .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dashboard-header .logo {
+  font-size: 2em;
+  color: var(--secondary-color);
+  font-weight: bold;
+}
+
+.dashboard-header .logo a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.user-info span {
+  font-weight: bold;
+  font-size: 1.1em;
+  color: var(--accent-color);
+}
+
+.user-info .nav-links {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.user-info .nav-links a,
+.user-info .nav-links button {
+  color: var(--light-text);
+  text-decoration: none;
+  font-weight: bold;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1em;
+  transition: color 0.3s ease;
+}
+
+.user-info .nav-links a:hover,
+.user-info .nav-links button:hover {
+  color: var(--primary-color);
+}
+
+.btn-logout-small {
+  padding: 8px 15px;
+  background-color: #f44336;
+  color: white;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.btn-logout-small:hover {
+  background-color: #d32f2f;
+}
+
+/* Main Content */
+.dashboard-main-content {
+  flex-grow: 1; /* Ocupa o espaço restante */
+  padding: 40px 20px;
+}
+
+.lobby-search-filter {
+  background-color: #24243a;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.lobby-search-filter h3 {
+  color: var(--primary-color);
+  margin-bottom: 25px;
+  font-size: 2em;
+}
+
+.filter-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+  align-items: center;
+}
+
+.filter-controls input,
+.filter-controls select {
+  padding: 10px 15px;
+  border: 1px solid #444;
+  border-radius: 5px;
+  background-color: #1a1a2e;
+  color: var(--light-text);
+  font-size: 1em;
+  width: 100%; /* Default para mobile */
+  max-width: 200px; /* Limite de largura */
+}
+
+.filter-controls input::placeholder {
+  color: #bbb;
+}
+
+.filter-controls button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.filter-controls .btn-primary {
+  background-color: var(--primary-color);
+  color: #fff;
+}
+
+.filter-controls .btn-primary:hover {
+  background-color: #8e24aa;
+  transform: translateY(-2px);
+}
+
+.filter-controls .btn-secondary {
+  background-color: var(--accent-color);
+  color: var(--dark-background);
+}
+
+.filter-controls .btn-secondary:hover {
+  background-color: #00aebc;
+  transform: translateY(-2px);
+}
+
+.lobby-list h3 {
+  color: var(--secondary-color);
+  margin-bottom: 30px;
+  font-size: 2em;
+  text-align: center;
+}
+
+.lobby-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+}
+
+.lobby-list p {
+  text-align: center;
+  font-size: 1.2em;
+  color: #aaa;
+  margin-top: 20px;
+}
+
+.btn-create-lobby {
+  display: block;
+  width: fit-content;
+  margin: 40px auto 20px auto;
+  padding: 15px 30px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.2em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  box-shadow: 0 4px 10px rgba(106, 27, 154, 0.4);
+}
+
+.btn-create-lobby:hover {
+  background-color: #8e24aa;
+  transform: translateY(-3px);
+}
+
+/* Ajustes para telas menores */
+@media (max-width: 768px) {
+  .user-info {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+  }
+  .user-info .nav-links {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+  }
+  .filter-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .filter-controls input,
+  .filter-controls select,
+  .filter-controls button {
+    max-width: 100%;
+  }
+}

@@ -1,0 +1,99 @@
+/* CreateLobbyModal.css */
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: #24243a;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.7);
+  width: 90%;
+  max-width: 500px;
+  position: relative;
+  color: var(--light-text);
+  text-align: center;
+}
+
+.modal-close-button {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 2em;
+  color: var(--light-text);
+  cursor: pointer;
+  line-height: 1;
+}
+
+.modal-close-button:hover {
+  color: var(--accent-color);
+}
+
+.modal-content h2 {
+  color: var(--secondary-color);
+  margin-bottom: 25px;
+  font-size: 2em;
+}
+
+.modal-content .form-group {
+  margin-bottom: 18px;
+  text-align: left;
+}
+
+.modal-content .form-group label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--light-text);
+  font-weight: bold;
+}
+
+.modal-content .form-group input,
+.modal-content .form-group select,
+.modal-content .form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #444;
+  border-radius: 5px;
+  background-color: #1a1a2e;
+  color: var(--light-text);
+  font-size: 1em;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.modal-content .form-group input:focus,
+.modal-content .form-group select:focus,
+.modal-content .form-group textarea:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(106, 27, 154, 0.3);
+  outline: none;
+}
+
+.modal-content textarea {
+  resize: vertical; /* Permite redimensionar verticalmente */
+  min-height: 80px;
+}
+
+.modal-content .btn-auth {
+  margin-top: 25px;
+  width: auto;
+  padding: 12px 30px;
+  font-size: 1em;
+}
+
+/* Reutilizando as classes de mensagem do Auth.css */
+.modal-content .message {
+  margin-bottom: 15px;
+  font-size: 0.95em;
+}

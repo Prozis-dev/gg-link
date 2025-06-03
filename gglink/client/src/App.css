@@ -1,0 +1,202 @@
+/* Variáveis CSS para cores e fontes */
+:root {
+  --primary-color: #6a1b9a; /* Roxo vibrante */
+  --secondary-color: #ff9800; /* Laranja energético */
+  --dark-background: #1a1a2e; /* Azul escuro quase preto */
+  --light-text: #e0e0e0; /* Cinza claro para texto */
+  --accent-color: #00bcd4; /* Azul turquesa para destaque */
+  --font-family: 'Arial', sans-serif;
+}
+
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-family);
+  line-height: 1.6;
+  background-color: var(--dark-background);
+  color: var(--light-text);
+  overflow-x: hidden; /* Evita scroll horizontal */
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Header e Navbar */
+.header {
+  background-color: rgba(0, 0, 0, 0.5); /* Fundo semi-transparente */
+  padding: 15px 0;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 2em;
+  color: var(--secondary-color);
+  font-weight: bold;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+}
+
+.nav-links li {
+  margin-left: 30px;
+}
+
+.nav-links a {
+  color: var(--light-text);
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: var(--accent-color);
+}
+
+/* Botões */
+.btn-primary, .btn-secondary {
+  display: inline-block;
+  padding: 12px 25px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+  font-size: 1em;
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background-color: #8e24aa; /* Um pouco mais escuro */
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  background-color: var(--accent-color);
+  color: var(--dark-background);
+}
+
+.btn-secondary:hover {
+  background-color: #00aebc; /* Um pouco mais escuro */
+  transform: translateY(-2px);
+}
+
+/* Seções */
+.main-content section {
+  padding: 100px 0;
+  text-align: center;
+}
+
+.hero-section {
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://via.placeholder.com/1500x800/1a1a2e/e0e0e0?text=Background+Gaming') no-repeat center center/cover;
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+  padding-top: 100px; /* Para não ficar abaixo do header fixo */
+}
+
+.hero-section h2 {
+  font-size: 3.5em;
+  margin-bottom: 20px;
+  color: var(--secondary-color);
+}
+
+.hero-section p {
+  font-size: 1.3em;
+  margin-bottom: 40px;
+}
+
+.features-section, .how-it-works-section {
+  background-color: #24243a; /* Um tom um pouco mais claro que o dark-background */
+}
+
+h3 {
+  font-size: 2.5em;
+  margin-bottom: 50px;
+  color: var(--primary-color);
+}
+
+.feature-grid, .steps-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 40px;
+  margin-top: 50px;
+}
+
+.feature-item, .step-item {
+  background-color: #1a1a2e;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+  transition: transform 0.3s ease;
+}
+
+.feature-item:hover, .step-item:hover {
+  transform: translateY(-5px);
+}
+
+.feature-item h4, .step-item h4 {
+  font-size: 1.5em;
+  color: var(--accent-color);
+  margin-bottom: 15px;
+}
+
+.step-item .step-number {
+  display: inline-block;
+  background-color: var(--primary-color);
+  color: #fff;
+  font-size: 1.8em;
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  border-radius: 50%;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.join-us-section {
+  background-color: var(--dark-background);
+}
+
+.join-us-section p {
+  font-size: 1.2em;
+  margin-bottom: 30px;
+}
+
+/* Footer */
+.footer {
+  background-color: #0d0d1a;
+  color: var(--light-text);
+  text-align: center;
+  padding: 30px 0;
+  font-size: 0.9em;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}

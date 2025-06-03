@@ -1,0 +1,240 @@
+/* LobbyPage.css */
+
+.lobby-page-container {
+  min-height: 100vh;
+  background-color: var(--dark-background);
+  color: var(--light-text);
+  display: flex;
+  flex-direction: column;
+}
+
+.lobby-header {
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 20px 0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+  text-align: center;
+}
+
+.lobby-header .container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.lobby-title {
+  font-size: 2.8em;
+  color: var(--secondary-color);
+  margin-bottom: 5px;
+}
+
+.game-name {
+  font-size: 0.7em;
+  color: var(--accent-color);
+}
+
+.owner-info {
+  font-size: 1.1em;
+  color: var(--light-text);
+  opacity: 0.8;
+}
+
+.lobby-main-content {
+  display: flex;
+  flex-grow: 1;
+  gap: 30px;
+  padding: 40px 20px;
+  flex-wrap: wrap; /* Para layout responsivo */
+}
+
+.chat-section {
+  flex: 3; /* Ocupa mais espaço */
+  background-color: #24243a;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  min-height: 500px; /* Altura mínima para o chat */
+}
+
+.chat-section h3 {
+  color: var(--primary-color);
+  font-size: 1.8em;
+  padding: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  text-align: center;
+}
+
+.chat-messages {
+  flex-grow: 1;
+  padding: 20px;
+  overflow-y: auto; /* Scroll para mensagens */
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.chat-message {
+  background-color: #1a1a2e;
+  padding: 10px 15px;
+  border-radius: 8px;
+  max-width: 80%;
+  align-self: flex-start; /* Mensagens do sistema e outros */
+  word-wrap: break-word; /* Quebra de linha para mensagens longas */
+}
+
+.chat-message.own-message {
+  background-color: var(--primary-color);
+  align-self: flex-end; /* Mensagens próprias */
+}
+
+.message-sender {
+  font-weight: bold;
+  color: var(--accent-color);
+}
+
+.own-message .message-sender {
+  color: #fff;
+}
+
+.message-timestamp {
+  font-size: 0.75em;
+  color: #bbb;
+  margin-left: 10px;
+  opacity: 0.7;
+}
+
+.chat-input-form {
+  display: flex;
+  padding: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.chat-input-form input {
+  flex-grow: 1;
+  padding: 10px 15px;
+  border: 1px solid #444;
+  border-radius: 5px;
+  background-color: #1a1a2e;
+  color: var(--light-text);
+  font-size: 1em;
+  margin-right: 10px;
+}
+
+.chat-input-form input:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(106, 27, 154, 0.3);
+  outline: none;
+}
+
+.btn-send-message {
+  padding: 10px 20px;
+  background-color: var(--accent-color);
+  color: var(--dark-background);
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-send-message:hover {
+  background-color: #00aebc;
+}
+
+.lobby-sidebar {
+  flex: 1; /* Ocupa menos espaço */
+  background-color: #24243a;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  padding: 20px;
+  min-width: 250px; /* Largura mínima para a sidebar */
+}
+
+.players-list h3 {
+  color: var(--primary-color);
+  font-size: 1.6em;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.players-list ul {
+  list-style: none;
+  padding: 0;
+  max-height: 300px; /* Altura máxima para a lista de players */
+  overflow-y: auto;
+  margin-bottom: 25px;
+}
+
+.players-list li {
+  background-color: #1a1a2e;
+  padding: 10px 15px;
+  border-radius: 5px;
+  margin-bottom: 8px;
+  font-size: 1em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.lobby-actions-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 20px;
+}
+
+.btn-leave-lobby,
+.btn-close-lobby {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 1.1em;
+  transition: background-color 0.3s ease;
+}
+
+.btn-leave-lobby {
+  background-color: #ff5722; /* Laranja avermelhado */
+  color: white;
+}
+
+.btn-leave-lobby:hover {
+  background-color: #e64a19;
+}
+
+.btn-close-lobby {
+  background-color: #f44336; /* Vermelho */
+  color: white;
+}
+
+.btn-close-lobby:hover {
+  background-color: #d32f2f;
+}
+
+/* Loading state */
+.lobby-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: var(--dark-background);
+  color: var(--light-text);
+  font-size: 1.5em;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .lobby-main-content {
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  .chat-section, .lobby-sidebar {
+    min-width: unset;
+    width: 100%;
+  }
+}

@@ -1,0 +1,46 @@
+# ==== Arquivos do Sistema ====
+.DS_Store          # Mac
+Thumbs.db          # Windows
+desktop.ini        # Windows
+
+# ==== Diretórios ====
+/node_modules/     # Dependências do Node.js
+/bin/              # Binários compilados
+/dist/             # Builds de produção
+/build/            # Builds (React, etc.)
+/.cache/           # Caches de ferramentas
+/.tmp/             # Arquivos temporários
+/logs/             # Logs de aplicação
+/coverage/         # Relatórios de testes
+
+# ==== Ambiente ====
+.env               # Variáveis de ambiente locais
+.env.local         # Overrides de ambiente
+.env.development
+.env.test
+.env.production
+*.env.*            # Qualquer variação de .env
+
+# ==== IDEs e Editores ====
+.idea/             # JetBrains (WebStorm, PHPStorm)
+.vscode/           # VS Code
+*.swp              # Vim/Neovim
+*.sublime-workspace
+
+# ==== Linguagens ====
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Java
+*.class
+*.jar
+*.war
+
+# ==== Outros ====
+*.log              # Logs
+*.tmp              # Arquivos temporários
+*.bak              # Backups
+*.orig             # Arquivos de merge
