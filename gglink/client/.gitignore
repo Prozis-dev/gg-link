@@ -1,46 +1,73 @@
-# ==== Arquivos do Sistema ====
-.DS_Store          # Mac
-Thumbs.db          # Windows
-desktop.ini        # Windows
+# ================================
+# DEPENDÊNCIAS
+# ================================
+node_modules/
+.pnp
+.pnp.js
+.yarn-integrity
 
-# ==== Diretórios ====
-/node_modules/     # Dependências do Node.js
-/bin/              # Binários compilados
-/dist/             # Builds de produção
-/build/            # Builds (React, etc.)
-/.cache/           # Caches de ferramentas
-/.tmp/             # Arquivos temporários
-/logs/             # Logs de aplicação
-/coverage/         # Relatórios de testes
-
-# ==== Ambiente ====
-.env               # Variáveis de ambiente locais
-.env.local         # Overrides de ambiente
+# ================================
+# AMBIENTE/VARIÁVEIS
+# ================================
+.env
+.env.local
 .env.development
 .env.test
 .env.production
-*.env.*            # Qualquer variação de .env
+.env*.local
 
-# ==== IDEs e Editores ====
-.idea/             # JetBrains (WebStorm, PHPStorm)
-.vscode/           # VS Code
-*.swp              # Vim/Neovim
-*.sublime-workspace
+# ================================
+# LOGS E TEMPORÁRIOS
+# ================================
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+.DS_Store
+*.swp
+*.swo
 
-# ==== Linguagens ====
-# Python
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
+# ================================
+# BUILD/DISTRIBUIÇÃO
+# ================================
+dist/
+build/
+out/
+.next/
+.nuxt/
+.serverless/
+.turbo/
 
-# Java
-*.class
-*.jar
-*.war
+# ================================
+# SISTEMA/IDE
+# ================================
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
 
-# ==== Outros ====
-*.log              # Logs
-*.tmp              # Arquivos temporários
-*.bak              # Backups
-*.orig             # Arquivos de merge
+# ================================
+# TESTES/COBERTURA
+# ================================
+coverage/
+.nyc_output/
+*.lcov
+
+# ================================
+# PACOTES
+# ================================
+*.tgz
+
+# ================================
+# OUTROS
+# ================================
+*.bak
+*.tmp
+*.pid
+*.seed
+*.pid.lock
