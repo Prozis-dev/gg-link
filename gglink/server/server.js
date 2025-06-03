@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const jwt = require('jsonwebtoken'); // Para verificar o token JWT na conexão WebSocket
 
+const feedbackRoutes = require('./routes/feedbackRoutes');
 const authRoutes = require('./routes/authRoutes');
 const lobbyRoutes = require('./routes/lobbyRoutes');
 const User = require('./models/User'); // Importe o modelo de Usuário para buscar o nome
@@ -43,6 +44,8 @@ mongoose.connect(MONGO_URI)
 app.use('/api/auth', authRoutes);
 // Usar as rotas de lobbies
 app.use('/api/lobbies', lobbyRoutes);
+// Usar as rotas de feedback
+app.use('/api/feedback', feedbackRoutes);
 
 // ----- Socket.IO para Comunicação em Tempo Real -----
 // Aprimore a autenticação do Socket.IO

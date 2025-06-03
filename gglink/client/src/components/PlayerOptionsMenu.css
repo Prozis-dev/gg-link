@@ -1,0 +1,173 @@
+/* PlayerOptionsMenu.css */
+
+.player-options-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.player-options-menu {
+  background-color: #24243a; /* Mesma cor de fundo dos modais */
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.7);
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+  color: var(--light-text);
+  position: relative;
+}
+
+.player-options-menu h3 {
+  color: var(--secondary-color);
+  margin-bottom: 25px;
+  font-size: 1.8em;
+}
+
+.initial-options,
+.form-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.initial-options .btn-option,
+.form-actions .btn-submit,
+.form-actions .btn-cancel {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 1em;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.initial-options .btn-option {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.initial-options .btn-option:hover {
+  background-color: #8e24aa;
+  transform: translateY(-2px);
+}
+
+.btn-report-trigger {
+  background-color: var(--accent-color);
+  color: var(--dark-background);
+}
+
+.btn-report-trigger:hover {
+  background-color: #00aebc;
+  transform: translateY(-2px);
+}
+
+.rating-form h4,
+.report-form h4 {
+  font-size: 1.5em;
+  color: var(--primary-color);
+  margin-bottom: 20px;
+}
+
+.stars {
+  font-size: 2.5em;
+  color: #ccc;
+  margin-bottom: 20px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  gap: 3px;
+}
+
+.star {
+  transition: color 0.2s ease;
+}
+
+.star:hover {
+  color: #ffc107;
+}
+
+.star.filled {
+  color: #ffc107;
+}
+
+.rating-form textarea,
+.report-form textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #444;
+  border-radius: 5px;
+  background-color: #1a1a2e;
+  color: var(--light-text);
+  font-size: 1em;
+  resize: vertical;
+  min-height: 80px;
+  margin-bottom: 20px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.rating-form textarea:focus,
+.report-form textarea:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(106, 27, 154, 0.3);
+  outline: none;
+}
+
+.btn-submit {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.btn-submit:hover {
+  background-color: #8e24aa;
+  transform: translateY(-2px);
+}
+
+.btn-report-submit {
+  background-color: var(--accent-color);
+  color: var(--dark-background);
+}
+
+.btn-report-submit:hover {
+  background-color: #00aebc;
+  transform: translateY(-2px);
+}
+
+.btn-cancel {
+  background-color: #555;
+  color: white;
+}
+
+.btn-cancel:hover {
+  background-color: #777;
+  transform: translateY(-2px);
+}
+
+/* Mensagens de feedback (reutilizando estilos do Auth.css) */
+.player-options-menu .message {
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  font-weight: bold;
+  text-align: center;
+  font-size: 0.9em;
+}
+
+.player-options-menu .message.success {
+  background-color: #28a745;
+  color: white;
+}
+
+.player-options-menu .message.error {
+  background-color: #dc3545;
+  color: white;
+}
