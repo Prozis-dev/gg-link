@@ -1,0 +1,204 @@
+/* Navbar.css */
+.navbar-container {
+  background-color: rgba(10, 10, 20, 0.85); /* Fundo escuro semi-transparente */
+  backdrop-filter: blur(10px);
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky; /* Ou fixed, se preferir que fique sempre no topo da viewport */
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  color: var(--light-text);
+}
+
+.navbar-logo a {
+  font-size: 1.8em;
+  font-weight: bold;
+  color: var(--secondary-color);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.navbar-logo a:hover {
+  color: var(--primary-color);
+}
+
+.navbar-links {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-links li {
+  margin-left: 25px;
+}
+
+.navbar-links a,
+.navbar-links button {
+  color: var(--light-text);
+  text-decoration: none;
+  font-weight: bold;
+  padding: 8px 15px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1em;
+}
+
+.navbar-links a:hover,
+.navbar-links button:hover {
+  color: var(--dark-background);
+  background-color: var(--accent-color);
+}
+
+.navbar-button.login-button {
+  background-color: var(--primary-color);
+  color: white;
+}
+.navbar-button.login-button:hover {
+  background-color: var(--secondary-color);
+  color: var(--dark-background);
+}
+
+/* Dropdown do Usuário */
+.navbar-user-dropdown {
+  position: relative;
+}
+
+.navbar-username-button {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.navbar-username-button .fa-caret-down {
+  transition: transform 0.3s ease;
+}
+.navbar-username-button .fa-caret-down.open {
+  transform: rotate(180deg);
+}
+
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%; /* Abaixo do botão */
+  right: 0;
+  background-color: #24243a; /* Cor de fundo do dropdown */
+  border: 1px solid #333;
+  border-radius: 5px;
+  list-style: none;
+  padding: 10px 0;
+  margin-top: 8px; /* Espaçamento do botão */
+  min-width: 160px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  z-index: 1001;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+}
+
+.navbar-user-dropdown:hover .dropdown-menu, /* Para hover se preferir */
+.navbar-user-dropdown .dropdown-menu.show-dropdown { /* Classe para controle JS */
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dropdown-menu li a,
+.dropdown-menu li button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 10px 20px;
+  color: var(--light-text);
+  background: none;
+  border: none;
+  font-size: 0.95em;
+}
+
+.dropdown-menu li a:hover,
+.dropdown-menu li button:hover {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+/* Hamburger Menu para Mobile */
+.navbar-hamburger {
+  display: none; /* Oculto em desktop */
+  font-size: 1.8em;
+  color: var(--light-text);
+  cursor: pointer;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .navbar-links {
+    display: none; /* Oculta os links normais */
+    flex-direction: column;
+    width: 100%;
+    position: absolute;
+    top: 68px; /* Altura da navbar, ajuste conforme necessário */
+    left: 0;
+    background-color: rgba(10, 10, 20, 0.95); /* Fundo para o menu mobile */
+    padding: 15px 0;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  }
+
+  .navbar-links.active {
+    display: flex; /* Mostra o menu quando ativo */
+  }
+
+  .navbar-links li {
+    margin: 10px 0;
+    text-align: center;
+    width: 100%;
+  }
+
+  .navbar-links li a,
+  .navbar-links li button {
+    display: block;
+    width: calc(100% - 40px);
+    margin: 5px auto;
+  }
+
+  .navbar-user-dropdown {
+    width: 100%;
+  }
+  .navbar-username-button {
+    justify-content: center;
+  }
+
+  .dropdown-menu {
+    position: static; /* Remove posicionamento absoluto no mobile */
+    width: 100%;
+    margin-top: 5px;
+    border-top: 1px solid #333;
+    box-shadow: none;
+    opacity: 1; /* Sempre visível quando o dropdown principal é aberto */
+    visibility: visible;
+    transform: none;
+    transition: none;
+  }
+  
+  /* Para o dropdown não sobrepor outros itens no menu mobile quando fechado */
+   .navbar-user-dropdown .dropdown-menu:not(.show-dropdown) {
+     display: none;
+   }
+   .navbar-user-dropdown .dropdown-menu.show-dropdown {
+     display: block;
+   }
+
+
+  .navbar-hamburger {
+    display: block; /* Mostra o hamburger em mobile */
+  }
+}

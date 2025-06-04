@@ -177,22 +177,6 @@ function Dashboard() {
 
   return (
     <div className="dashboard-container">
-      <header className="dashboard-header">
-        <div className="container">
-          <h1 className="logo">GGLink</h1>
-          <div className="user-info">
-            <span>Olá, {userName}</span>
-            <nav>
-              <ul className="nav-links">
-                <li><a href="/communities">Comunidades</a></li>
-                <li><a href="/profile">Perfil</a></li>
-                <li><button onClick={handleLogout} className="btn-logout-small">Sair</button></li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </header>
-
       <main className="dashboard-main-content container">
         <section className="lobby-search-filter">
           <h3>Encontrar Lobbies</h3>
