@@ -1,0 +1,277 @@
+/* client/src/styles/ProfilePage.css */
+.profile-page-container {
+  color: var(--light-text);
+  background-color: var(--dark-background);
+  min-height: 100vh;
+  padding-bottom: 40px;
+}
+
+.profile-loading,
+.profile-error {
+  text-align: center;
+  font-size: 1.5em;
+  padding: 50px;
+  color: var(--light-text);
+}
+.profile-error {
+  color: #f44336;
+}
+
+.profile-header {
+  background-color: #24243a; /* Cor ligeiramente mais clara para o header */
+  padding-bottom: 30px; /* Espaço para o avatar sobrepor um pouco */
+  position: relative;
+  margin-bottom: -50px; /* Para o card de info sobrepor */
+}
+
+.profile-banner {
+  height: 200px; /* Ou a altura desejada para a capa */
+  background-color: var(--primary-color); /* Placeholder, idealmente uma imagem */
+  background-image: url('https://via.placeholder.com/1200x200/6a1b9a/e0e0e0?text=Capa+do+Perfil'); /* Imagem de capa placeholder */
+  background-size: cover;
+  background-position: center;
+}
+
+.profile-avatar-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: -75px; /* Metade da altura do avatar para sobrepor */
+  position: relative; /* Para z-index funcionar com o botão */
+}
+
+.profile-avatar {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 5px solid var(--dark-background); /* Contorno para destacar */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  object-fit: cover;
+}
+
+.profile-avatar-section .edit-button {
+  margin-top: 10px;
+  padding: 8px 15px;
+  font-size: 0.9em;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--light-text);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.profile-avatar-section .edit-button:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+.profile-avatar-section .edit-button .fa-camera {
+  margin-right: 5px;
+}
+
+.profile-main-content {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+  padding-top: 70px; /* Espaço para o header do perfil */
+}
+
+.profile-info-card {
+  background-color: #1f1f30; /* Tom ainda mais escuro para o card principal */
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+  text-align: center; /* Centraliza o nome de usuário */
+}
+
+.profile-info-card h2 {
+  color: var(--secondary-color);
+  font-size: 2.2em;
+  margin-bottom: 15px;
+  display: inline-block; /* Para o ícone de edição ficar ao lado */
+}
+
+.info-item {
+  margin-bottom: 15px;
+  text-align: left; /* Alinha os itens à esquerda dentro do card */
+  font-size: 1.1em;
+  padding: 8px 0;
+  border-bottom: 1px solid #303045;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.info-item:last-child {
+  border-bottom: none;
+}
+
+.info-item strong {
+  color: var(--accent-color);
+  margin-right: 10px;
+}
+
+.info-item .bio-text {
+  white-space: pre-wrap; /* Mantém quebras de linha na bio */
+  color: #ccc;
+  flex-grow: 1;
+}
+
+.edit-icon-button {
+  background: none;
+  border: none;
+  color: var(--accent-color);
+  cursor: pointer;
+  font-size: 0.9em;
+  margin-left: 10px;
+}
+.edit-icon-button:hover {
+  color: var(--primary-color);
+}
+
+.edit-form, .edit-form-inline {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  width: 100%; /* Ocupa o espaço do item */
+}
+.edit-form-inline input[type="text"] {
+  flex-grow: 1;
+}
+
+.edit-form input[type="text"],
+.edit-form textarea,
+.edit-form-inline input[type="text"] {
+  width: 100%;
+  padding: 8px;
+  background-color: #2a2a40;
+  border: 1px solid #444;
+  color: var(--light-text);
+  border-radius: 4px;
+  font-size: 0.95em;
+}
+.edit-form textarea {
+  min-height: 60px;
+  resize: vertical;
+}
+
+.edit-form button, .edit-form-inline button {
+  padding: 8px 12px;
+  font-size: 0.9em;
+  border-radius: 4px;
+  cursor: pointer;
+  border: none;
+}
+.edit-form button:first-of-type, .edit-form-inline button:first-of-type { /* Botão Salvar */
+  background-color: var(--primary-color);
+  color: white;
+}
+.edit-form button:first-of-type:hover, .edit-form-inline button:first-of-type:hover {
+  background-color: #8e24aa;
+}
+.edit-form button:last-of-type, .edit-form-inline button:last-of-type { /* Botão Cancelar */
+  background-color: #555;
+  color: white;
+}
+.edit-form button:last-of-type:hover, .edit-form-inline button:last-of-type:hover {
+  background-color: #777;
+}
+
+
+.star-rating {
+  color: #ffc107; /* Amarelo para estrelas */
+  font-size: 1.2em;
+}
+
+.profile-ratings-feed {
+  margin-top: 40px;
+}
+
+.profile-ratings-feed h3 {
+  color: var(--secondary-color);
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1.8em;
+}
+
+.ratings-list {
+  list-style: none;
+  padding: 0;
+}
+
+.rating-item {
+  background-color: #1f1f30;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.rating-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.rater-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+  object-fit: cover;
+}
+
+.rater-username {
+  font-weight: bold;
+  color: var(--accent-color);
+  margin-right: auto; /* Empurra estrelas e data para a direita */
+}
+
+.rating-stars-display {
+  color: #ffc107;
+  font-size: 1.1em;
+  margin-left: 10px;
+}
+
+.rating-comment {
+  font-style: italic;
+  color: #ccc;
+  margin-bottom: 8px;
+  padding-left: 50px; /* Alinha com o texto após o avatar */
+}
+
+.rating-timestamp {
+  font-size: 0.8em;
+  color: #888;
+  display: block;
+  text-align: right;
+  margin-top: 5px;
+}
+
+@media (max-width: 768px) {
+  .profile-banner {
+    height: 150px;
+  }
+  .profile-avatar {
+    width: 120px;
+    height: 120px;
+    margin-top: -60px;
+  }
+  .profile-info-card h2 {
+    font-size: 1.8em;
+  }
+  .info-item {
+    font-size: 1em;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .info-item .edit-icon-button {
+    margin-left: 0;
+    margin-top: 5px;
+  }
+  .edit-form, .edit-form-inline {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .edit-form button, .edit-form-inline button {
+    width: 100%;
+    margin-top: 5px;
+  }
+}

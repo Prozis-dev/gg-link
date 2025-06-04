@@ -7,7 +7,8 @@ import Dashboard from "./pages/Dashboard";
 import LobbyPage from "./pages/LobbyPage";
 import CommunityList from "./pages/CommunityList"; // Importe a lista de comunidades
 import CommunityDetailPage from "./pages/CommunityDetailPage";
-import Navbar from "./components/Navbar"; // Importe os detalhes da comunidade
+import Navbar from "./components/Navbar";
+import ProfilePage from './pages/ProfilePage'; // Importe os detalhes da comunidade
 
 function App() {
     return (
@@ -153,6 +154,8 @@ function App() {
                     <Route path="/login" element={<Login />} />
                     <Route path="/dashboard" element={<Dashboard />} />
                     <Route path="/lobby/:id" element={<LobbyPage />} />
+                    <Route path="/profile" element={<ProfilePage />} />
+                    <Route path="/profile/:userId" element={<ProfilePage />} />
                     <Route
                         path="/communities"
                         element={<CommunityList />}

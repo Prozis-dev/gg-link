@@ -14,12 +14,26 @@ const userSchema = new mongoose.Schema({
     unique: true,
     trim: true,
     lowercase: true,
-    match: [/.+@.+\..+/, 'Por favor, insira um e-mail válido'] // Regex para validação de e-mail
+    match: [/.+@.+\..+/, 'Por favor, insira um e-mail válido']
   },
   password: {
     type: String,
     required: true,
-    minlength: 6 // Senha mínima de 6 caracteres
+    minlength: 6
+  },
+  profilePictureUrl: { // Novo campo
+    type: String,
+    default: 'https://via.placeholder.com/150/1a1a2e/e0e0e0?text=Avatar' // URL de um avatar padrão
+  },
+  favoriteGame: { // Novo campo
+    type: String,
+    trim: true,
+    default: ''
+  },
+  bio: { // Novo campo (opcional)
+    type: String,
+    maxlength: 250,
+    default: ''
   },
   createdAt: {
     type: Date,

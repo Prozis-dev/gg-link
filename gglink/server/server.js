@@ -11,6 +11,7 @@ const authRoutes = require('./routes/authRoutes');
 const lobbyRoutes = require('./routes/lobbyRoutes');
 const communityRoutes = require('./routes/communityRoutes');
 const User = require('./models/User');
+const userRoutes = require('./routes/userRoutes');
 
 const app = express();
 const server = http.createServer(app);
@@ -46,6 +47,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/lobbies', lobbyRoutes);
 app.use('/api/feedback', feedbackRoutes);
 app.use('/api/communities', communityRoutes);
+app.use('/api/users', userRoutes);
 
 // Middleware de autenticação para Socket.IO
 io.use(async (socket, next) => {
