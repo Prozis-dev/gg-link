@@ -171,3 +171,34 @@
   background-color: #dc3545;
   color: white;
 }
+.initial-options .btn-option {
+  background-color: var(--primary-color);
+  color: white;
+  /* ... outros estilos de btn-option ... */
+}
+
+.initial-options .btn-option:hover {
+  background-color: #8e24aa;
+  transform: translateY(-2px);
+}
+
+/* Estilo específico para o botão Ver Perfil, se desejado */
+.btn-view-profile {
+  background-color: var(--secondary-color) !important; /* Exemplo de cor diferente */
+  color: var(--dark-background) !important;
+}
+
+.btn-view-profile:hover {
+  background-color: #ffb74d !important; /* Exemplo de hover diferente */
+  transform: translateY(-2px);
+}
+
+.btn-report-trigger {
+  background-color: var(--accent-color);
+  color: var(--dark-background);
+}
+
+.btn-report-trigger:hover {
+  background-color: #00aebc;
+  transform: translateY(-2px);
+}

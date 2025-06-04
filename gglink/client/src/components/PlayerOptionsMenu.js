@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import './PlayerOptionsMenu.css'; // Crie este CSS
+import { useNavigate } from 'react-router-dom'; // Importar useNavigate
+import './PlayerOptionsMenu.css';
 
-function PlayerOptionsMenu({ player, onClose, onRate, onReport }) {
+// Adicione a nova prop onViewProfile
+function PlayerOptionsMenu({ player, onClose, onRate, onReport, onViewProfile }) {
   const [showRatingForm, setShowRatingForm] = useState(false);
   const [showReportForm, setShowReportForm] = useState(false);
   const [rating, setRating] = useState(0);
@@ -9,6 +11,7 @@ function PlayerOptionsMenu({ player, onClose, onRate, onReport }) {
   const [reportReason, setReportReason] = useState('');
   const [message, setMessage] = useState('');
   const [messageType, setMessageType] = useState(''); // 'success' ou 'error'
+  const navigate = useNavigate(); // Hook para navegação
 
   const handleRatingSubmit = async () => {
     if (rating === 0) {
@@ -16,10 +19,10 @@ function PlayerOptionsMenu({ player, onClose, onRate, onReport }) {
       setMessageType('error');
       return;
     }
-    await onRate(player._id, rating, comment, setMessage, setMessageType);
-    // Após a ação, você pode optar por fechar o menu ou reiniciar o formulário
-    // Aqui, vamos fechar para simplificar o fluxo.
-    onClose();
+    const success = await onRate(player._id, rating, comment, setMessage, setMessageType);
+    if (success) {
+        setTimeout(() => onClose(), 1500); // Fecha após um pequeno delay em caso de sucesso
+    }
   };
 
   const handleReportSubmit = async () => {
@@ -28,19 +31,36 @@ function PlayerOptionsMenu({ player, onClose, onRate, onReport }) {
       setMessageType('error');
       return;
     }
-    await onReport(player._id, reportReason, setMessage, setMessageType);
-    // Após a ação, fechar o menu
-    onClose();
+    const success = await onReport(player._id, reportReason, setMessage, setMessageType);
+     if (success) {
+        setTimeout(() => onClose(), 1500); // Fecha após um pequeno delay em caso de sucesso
+    }
+  };
+
+  const handleViewProfileClick = () => {
+    if (onViewProfile) { // Verifica se a prop foi passada
+      onViewProfile(player._id);
+    } else { // Fallback ou navegação direta se a prop não for passada (menos ideal)
+      navigate(`/profile/${player._id}`);
+      onClose();
+    }
   };
 
   return (
     <div className="player-options-overlay" onClick={onClose}>
-      <div className="player-options-menu" onClick={(e) => e.stopPropagation()}> {/* Impede o clique no overlay de fechar */}
+      <div className="player-options-menu" onClick={(e) => e.stopPropagation()}>
         <h3>Opções para {player.username}</h3>
         {message && <div className={`message ${messageType}`}>{message}</div>}
 
         {!showRatingForm && !showReportForm && (
           <div className="initial-options">
+            {/* NOVO BOTÃO "VER PERFIL" */}
+            <button 
+              className="btn-option btn-view-profile" 
+              onClick={handleViewProfileClick}
+            >
+              Ver Perfil
+            </button>
             <button className="btn-option" onClick={() => setShowRatingForm(true)}>Avaliar</button>
             <button className="btn-option btn-report-trigger" onClick={() => setShowReportForm(true)}>Denunciar</button>
           </div>
@@ -55,6 +75,9 @@ function PlayerOptionsMenu({ player, onClose, onRate, onReport }) {
                   key={star}
                   className={`star ${star <= rating ? 'filled' : ''}`}
                   onClick={() => setRating(star)}
+                  role="button" // Adicionado para acessibilidade
+                  tabIndex={0}  // Adicionado para acessibilidade
+                  onKeyDown={(e) => e.key === 'Enter' && setRating(star)} // Adicionado para acessibilidade
                 >
                   &#9733;
                 </span>
@@ -68,7 +91,7 @@ function PlayerOptionsMenu({ player, onClose, onRate, onReport }) {
             ></textarea>
             <div className="form-actions">
               <button className="btn-submit" onClick={handleRatingSubmit}>Enviar Avaliação</button>
-              <button className="btn-cancel" onClick={() => setShowRatingForm(false)}>Cancelar</button>
+              <button className="btn-cancel" onClick={() => { setShowRatingForm(false); setMessage(''); }}>Cancelar</button>
             </div>
           </div>
         )}
@@ -85,7 +108,7 @@ function PlayerOptionsMenu({ player, onClose, onRate, onReport }) {
             ></textarea>
             <div className="form-actions">
               <button className="btn-submit btn-report-submit" onClick={handleReportSubmit}>Enviar Denúncia</button>
-              <button className="btn-cancel" onClick={() => setShowReportForm(false)}>Cancelar</button>
+              <button className="btn-cancel" onClick={() => { setShowReportForm(false); setMessage(''); }}>Cancelar</button>
             </div>
           </div>
         )}

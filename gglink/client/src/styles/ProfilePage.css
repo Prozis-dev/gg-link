@@ -274,4 +274,69 @@
     width: 100%;
     margin-top: 5px;
   }
+  .display-value-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+.username-item .display-value-container,
+.bio-display.display-value-container { /* Para h2 e p ocuparem espaço e o botão ficar à direita */
+    flex-direction: row; /* Garante que o nome/bio e o botão fiquem na mesma linha */
+}
+.bio-display.display-value-container p {
+    flex-grow: 1; /* Permite que o texto da bio ocupe o espaço disponível */
+    margin-right: 10px; /* Espaço antes do botão de edição */
+}
+
+
+.username-item h2 {
+  margin-right: auto; /* Empurra o botão de edição para a direita */
+}
+
+
+.edit-form-inline.avatar-edit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 15px;
+    width: 100%;
+    max-width: 300px; /* Limita largura do form de avatar */
+}
+
+.edit-form-inline.avatar-edit-form input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #2a2a40;
+    border: 1px solid #444;
+    color: var(--light-text);
+    border-radius: 4px;
+    font-size: 0.9em;
+}
+
+.edit-form-inline.avatar-edit-form button {
+    width: 100%;
+}
+
+.avatar-edit-trigger {
+    margin-top: 10px;
+}
+
+/* Ajustes para quando o formulário de edição está ativo */
+.info-item .edit-form {
+  width: 100%; /* Faz o formulário ocupar todo o espaço do info-item */
+}
+
+.info-item .edit-form input,
+.info-item .edit-form textarea {
+  flex-grow: 1; /* Permite que o input cresça */
+  margin-right: 10px; /* Espaço antes dos botões */
+}
+.info-item .edit-form textarea {
+  height: 70px; /* Altura padrão para bio */
+}
+
+.info-item .edit-form button {
+  flex-shrink: 0; /* Impede que os botões encolham */
+}
 }
