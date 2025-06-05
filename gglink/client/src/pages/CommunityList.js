@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import '../styles/CommunityList.css'; // Crie este CSS
+import '../styles/CommunityList.css'; 
 
 function CommunityList() {
   const [communities, setCommunities] = useState([]);

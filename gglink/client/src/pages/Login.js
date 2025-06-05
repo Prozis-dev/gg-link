@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import '../styles/Auth.css'; // Usaremos o mesmo CSS
+import '../styles/Auth.css';
 
 function Login() {
   const [formData, setFormData] = useState({
-    identifier: '', // Pode ser username ou email
+    identifier: '', 
     password: ''
   });
   const [message, setMessage] = useState('');
-  const [messageType, setMessageType] = useState(''); // 'success' ou 'error'
+  const [messageType, setMessageType] = useState(''); 
   const navigate = useNavigate();
 
   const { identifier, password } = formData;
@@ -20,7 +20,6 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validação básica do frontend
     if (!identifier || !password) {
       setMessage('Todos os campos são obrigatórios.');
       setMessageType('error');
@@ -41,11 +40,11 @@ function Login() {
       if (response.ok) {
         setMessage(data.msg || 'Login realizado com sucesso!');
         setMessageType('success');
-        // Armazenar o token JWT no localStorage
+
         localStorage.setItem('gglink_token', data.token);
-        // Redirecionar para o dashboard ou página principal após o login
+
         setTimeout(() => {
-          navigate('/dashboard'); // Vamos criar esta rota depois
+          navigate('/dashboard'); 
         }, 1500);
       } else {
         setMessage(data.msg || 'Credenciais inválidas.');

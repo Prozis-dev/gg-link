@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react'; // Adicionado useRef
+import React, { useState, useEffect, useCallback, useRef } from 'react'; 
 import { useNavigate, useParams } from 'react-router-dom';
 import '../styles/ProfilePage.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -16,10 +16,6 @@ function ProfilePage() {
   const [isEditingBio, setIsEditingBio] = useState(false);
   const [isEditingPic, setIsEditingPic] = useState(false);
 
-  // Usar useRef para os campos de formulário para evitar re-renderizações desnecessárias
-  // e garantir que estamos pegando o valor mais recente ao submeter.
-  // No entanto, para simplicidade e consistência com o código anterior, manteremos o formData no estado por enquanto.
-  // Apenas certifique-se de que formData é atualizado corretamente antes de entrar no modo de edição.
   const [formData, setFormData] = useState({
     username: '',
     favoriteGame: '',
@@ -30,7 +26,7 @@ function ProfilePage() {
   const navigate = useNavigate();
   const { userId: pathUserId } = useParams(); 
 
-  const getUserIdFromToken = useCallback(() => { // useCallback para evitar recriação desnecessária
+  const getUserIdFromToken = useCallback(() => {
     const token = localStorage.getItem('gglink_token');
     if (!token) return null;
     try {
@@ -45,22 +41,21 @@ function ProfilePage() {
   }, []);
   
   const loggedInUserId = getUserIdFromToken();
-  // Se pathUserId existir, estamos vendo o perfil de outra pessoa. Caso contrário, é o perfil do usuário logado.
   const effectiveUserId = pathUserId || loggedInUserId;
-  const isOwnProfile = !!loggedInUserId && effectiveUserId === loggedInUserId; // Garante que loggedInUserId não seja null
+  const isOwnProfile = !!loggedInUserId && effectiveUserId === loggedInUserId; 
 
 
   const fetchProfileData = useCallback(async () => {
-    if (!effectiveUserId) { // Adicionada verificação
+    if (!effectiveUserId) { 
         setError('ID do usuário não encontrado.');
         setIsLoading(false);
-        if (!loggedInUserId) navigate('/login'); // Se não há ID e nem está logado, redireciona
+        if (!loggedInUserId) navigate('/login');
         return;
     }
     setIsLoading(true);
     setError('');
     const token = localStorage.getItem('gglink_token');
-    if (!token && isOwnProfile) { // Token necessário apenas se for o próprio perfil ou se o endpoint for protegido
+    if (!token && isOwnProfile) { 
       navigate('/login');
       setIsLoading(false);
       return;
@@ -70,7 +65,7 @@ function ProfilePage() {
 
     try {
       const response = await fetch(`http://localhost:5000${endpoint}`, {
-        headers: { 'x-auth-token': token }, // Token é necessário para /api/users/me e pode ser para /api/users/profile/:userId
+        headers: { 'x-auth-token': token },
       });
       const data = await response.json();
 
@@ -78,7 +73,6 @@ function ProfilePage() {
         setProfileData(data.user);
         setRatings(data.ratingsReceived || []);
         setAverageRating(data.averageRating || 0);
-        // Inicializa o formData com os dados carregados
         setFormData({
           username: data.user.username,
           favoriteGame: data.user.favoriteGame || '',
@@ -94,18 +88,17 @@ function ProfilePage() {
     } finally {
       setIsLoading(false);
     }
-  }, [navigate, effectiveUserId, loggedInUserId, isOwnProfile]); // Adicionado loggedInUserId e isOwnProfile
+  }, [navigate, effectiveUserId, loggedInUserId, isOwnProfile]); 
 
   useEffect(() => {
     fetchProfileData();
-  }, [fetchProfileData]); // Removidas outras dependências, pois fetchProfileData já as tem
+  }, [fetchProfileData]);
 
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleEditToggle = (field) => {
-    // Garante que o formData está atualizado com os dados mais recentes do perfil antes de abrir a edição
     if (profileData) {
         setFormData({
             username: profileData.username,
@@ -140,16 +133,16 @@ function ProfilePage() {
     if (field === 'game') payload.favoriteGame = formData.favoriteGame;
     if (field === 'bio') payload.bio = formData.bio;
     if (field === 'pic') {
-        if (formData.profilePictureUrl && !formData.profilePictureUrl.startsWith('http')) { // Validação simples de URL
+        if (formData.profilePictureUrl && !formData.profilePictureUrl.startsWith('http')) { 
             alert('URL da foto de perfil inválida. Deve começar com http ou https.');
             return;
         }
         payload.profilePictureUrl = formData.profilePictureUrl;
     }
     
-    setIsLoading(true); // Adiciona feedback de carregamento
+    setIsLoading(true);
     try {
-      const response = await fetch('http://localhost:5000/api/users/me', { // Endpoint de update
+      const response = await fetch('http://localhost:5000/api/users/me', { 
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -158,16 +151,14 @@ function ProfilePage() {
         body: JSON.stringify(payload),
       });
       const data = await response.json();
-      setIsLoading(false); // Termina o carregamento
+      setIsLoading(false); 
 
       if (response.ok) {
         alert(data.msg || 'Perfil atualizado!');
-        // Atualiza o estado local com os dados retornados do backend (que são os dados completos do perfil)
         if (data.profileData && data.profileData.user) {
             setProfileData(data.profileData.user);
             setRatings(data.profileData.ratingsReceived || []);
             setAverageRating(data.profileData.averageRating || 0);
-             // Re-set formData para os novos valores salvos
             setFormData({
                 username: data.profileData.user.username,
                 favoriteGame: data.profileData.user.favoriteGame || '',
@@ -182,7 +173,7 @@ function ProfilePage() {
         if (field === 'pic') setIsEditingPic(false);
         
         if (field === 'username' && payload.username !== (profileData ? profileData.username : '')) {
-            window.dispatchEvent(new Event('authChange')); // Notifica Navbar para atualizar username
+            window.dispatchEvent(new Event('authChange'));
         }
       } else {
         alert(`Erro: ${data.msg || 'Não foi possível atualizar o perfil.'}`);
@@ -194,23 +185,20 @@ function ProfilePage() {
     }
   };
 
-  // Adicione este log para depuração
-  // console.log({ loggedInUserId, pathUserId, effectiveUserId, isOwnProfile, profileData });
-
-  if (isLoading && !profileData) return <div className="profile-loading">Carregando perfil...</div>; // Mostra loading apenas se profileData ainda não foi carregado
+  if (isLoading && !profileData) return <div className="profile-loading">Carregando perfil...</div>;
   if (error) return <div className="profile-error">{error}</div>;
-  if (!profileData && !isLoading) return <div className="profile-error">Perfil não encontrado ou não acessível.</div>; // Mensagem se não houver dados e não estiver carregando
-  if (!profileData && isLoading) return <div className="profile-loading">Carregando perfil...</div>; // Redundante, mas seguro
+  if (!profileData && !isLoading) return <div className="profile-error">Perfil não encontrado ou não acessível.</div>; 
+  if (!profileData && isLoading) return <div className="profile-loading">Carregando perfil...</div>; 
 
 
   const renderStars = (rating) => {
     const fullStars = Math.floor(rating);
-    const halfStar = rating % 1 >= 0.25 && rating % 1 < 0.75; // Ajuste para meio estrela mais preciso
+    const halfStar = rating % 1 >= 0.25 && rating % 1 < 0.75; 
     const almostFullStar = rating % 1 >= 0.75;
     let stars = '';
     for (let i = 0; i < fullStars; i++) stars += '★';
-    if (almostFullStar) stars += '★'; // Considera quase cheia como cheia para visualização
-    else if (halfStar) stars += '½'; // Ou use um ícone de meia estrela se tiver
+    if (almostFullStar) stars += '★'; 
+    else if (halfStar) stars += '½'; 
     stars += '☆'.repeat(5 - stars.length);
     return stars;
   };

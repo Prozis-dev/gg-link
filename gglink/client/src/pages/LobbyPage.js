@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import io from 'socket.io-client';
-import PlayerOptionsMenu from '../components/PlayerOptionsMenu'; // Importe o novo componente
+import PlayerOptionsMenu from '../components/PlayerOptionsMenu'; 
 import '../styles/LobbyPage.css';
 
 const ENDPOINT = 'http://localhost:5000';
@@ -17,7 +17,7 @@ function LobbyPage() {
   const socketRef = useRef(null);
 
   const [showPlayerOptionsMenu, setShowPlayerOptionsMenu] = useState(false);
-  const [selectedPlayer, setSelectedPlayer] = useState(null); // O jogador clicado para avaliação/denúncia
+  const [selectedPlayer, setSelectedPlayer] = useState(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -79,7 +79,7 @@ function LobbyPage() {
       if (socketRef.current) {
         socketRef.current.disconnect();
       }
-      navigate('/dashboard'); // Redireciona diretamente
+      navigate('/dashboard'); 
     });
 
     socketRef.current.on('lobbyError', (errorMsg) => {
@@ -161,7 +161,7 @@ function LobbyPage() {
           socketRef.current.emit('leaveLobby', lobbyId);
           socketRef.current.disconnect();
         }
-        navigate('/dashboard'); // Redireciona diretamente para o dashboard
+        navigate('/dashboard');
       } else {
         const errorData = await response.json();
         alert(`Erro ao sair do lobby: ${errorData.msg}`);
@@ -194,7 +194,7 @@ function LobbyPage() {
           socketRef.current.emit('lobbyClosed', { lobbyId, lobbyName: lobbyDetails?.name });
           socketRef.current.disconnect();
         }
-        navigate('/dashboard'); // Redireciona diretamente
+        navigate('/dashboard'); 
       } else {
         const errorData = await response.json();
         alert(`Erro ao fechar lobby: ${errorData.msg}`);
@@ -206,14 +206,9 @@ function LobbyPage() {
   };
 
   const handlePlayerClick = (player) => {
-    // Não permite avaliar/denunciar a si mesmo ou o criador se ele não for um player avaliável
     if (player._id === currentUserId) {
-        return; // Não permite clicar no próprio perfil para avaliar/denunciar
+        return; 
     }
-    // Opcional: Impedir que o criador seja avaliado se ele for o único player
-    // if (lobbyDetails.owner._id === player._id && lobbyDetails.currentPlayers.length === 1) {
-    //   return;
-    // }
     setSelectedPlayer(player);
     setShowPlayerOptionsMenu(true);
   };
@@ -341,8 +336,8 @@ function LobbyPage() {
               {currentPlayers.map(player => (
                 <li
                   key={player._id}
-                  onClick={() => handlePlayerClick(player)} // Adiciona o evento de clique
-                  className={player._id !== currentUserId ? 'clickable-player' : ''} // Estilo para clicáveis
+                  onClick={() => handlePlayerClick(player)} 
+                  className={player._id !== currentUserId ? 'clickable-player' : ''} 
                   title={player._id !== currentUserId ? `Clique para avaliar/denunciar ${player.username}` : ''}
                 >
                   {player.username} {player._id === lobbyDetails.owner._id && '(Criador)'}
@@ -368,7 +363,7 @@ function LobbyPage() {
       {showPlayerOptionsMenu && selectedPlayer && (
         <PlayerOptionsMenu
           player={selectedPlayer}
-          lobbyId={lobbyId} // Passa o ID do lobby
+          lobbyId={lobbyId} 
           currentUserId={currentUserId}
           onClose={() => setShowPlayerOptionsMenu(false)}
           onRate={handleRatePlayer}

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import '../styles/Auth.css'; // Vamos criar este CSS
+import '../styles/Auth.css'; 
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -10,7 +10,7 @@ function Register() {
     confirmPassword: ''
   });
   const [message, setMessage] = useState('');
-  const [messageType, setMessageType] = useState(''); // 'success' ou 'error'
+  const [messageType, setMessageType] = useState('');
   const navigate = useNavigate();
 
   const { username, email, password, confirmPassword } = formData;
@@ -22,7 +22,6 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validação básica do frontend
     if (!username || !email || !password || !confirmPassword) {
       setMessage('Todos os campos são obrigatórios.');
       setMessageType('error');
@@ -59,11 +58,9 @@ function Register() {
       if (response.ok) {
         setMessage(data.msg || 'Cadastro realizado com sucesso!');
         setMessageType('success');
-        // Você pode armazenar o token JWT no localStorage aqui
         localStorage.setItem('gglink_token', data.token);
-        // Redirecionar para a página de login ou dashboard
         setTimeout(() => {
-          navigate('/login'); // Ou para o dashboard após o login automático
+          navigate('/login'); 
         }, 1500);
       } else {
         setMessage(data.msg || 'Erro ao cadastrar.');

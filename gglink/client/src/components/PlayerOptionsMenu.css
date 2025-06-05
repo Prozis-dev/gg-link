@@ -14,7 +14,7 @@
 }
 
 .player-options-menu {
-  background-color: #24243a; /* Mesma cor de fundo dos modais */
+  background-color: #24243a; 
   padding: 30px;
   border-radius: 10px;
   box-shadow: 0 5px 25px rgba(0, 0, 0, 0.7);
@@ -152,7 +152,6 @@
   transform: translateY(-2px);
 }
 
-/* Mensagens de feedback (reutilizando estilos do Auth.css) */
 .player-options-menu .message {
   padding: 10px;
   margin-bottom: 15px;
@@ -174,7 +173,6 @@
 .initial-options .btn-option {
   background-color: var(--primary-color);
   color: white;
-  /* ... outros estilos de btn-option ... */
 }
 
 .initial-options .btn-option:hover {
@@ -182,14 +180,13 @@
   transform: translateY(-2px);
 }
 
-/* Estilo específico para o botão Ver Perfil, se desejado */
 .btn-view-profile {
-  background-color: var(--secondary-color) !important; /* Exemplo de cor diferente */
+  background-color: var(--secondary-color) !important; 
   color: var(--dark-background) !important;
 }
 
 .btn-view-profile:hover {
-  background-color: #ffb74d !important; /* Exemplo de hover diferente */
+  background-color: #ffb74d !important; 
   transform: translateY(-2px);
 }
 

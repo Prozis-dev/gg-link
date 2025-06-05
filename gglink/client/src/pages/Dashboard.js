@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import CreateLobbyModal from '../components/CreateLobbyModal'; // Vamos criar este componente
-import LobbyCard from '../components/LobbyCard'; // Vamos criar este componente
+import CreateLobbyModal from '../components/CreateLobbyModal'; 
+import LobbyCard from '../components/LobbyCard'; 
 import '../styles/Dashboard.css';
 
 function Dashboard() {
@@ -13,7 +13,7 @@ function Dashboard() {
     skillLevel: 'Qualquer',
     numPlayers: ''
   });
-  const [userName, setUserName] = useState(''); // Estado para o nome do usuário logado
+  const [userName, setUserName] = useState(''); 
 
   useEffect(() => {
     const token = localStorage.getItem('gglink_token');
@@ -21,21 +21,15 @@ function Dashboard() {
       navigate('/login');
       return;
     }
-    // Em uma aplicação real, você decodificaria o JWT para pegar o nome do usuário
-    // ou faria uma requisição para um endpoint /api/user/me
-    // Por enquanto, vamos mockar ou decodificar um token simples para teste.
-    // Exemplo Simples:
     const base64Url = token.split('.')[1];
     const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
     const jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
         return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
     }).join(''));
     const userPayload = JSON.parse(jsonPayload);
-    // Para obter o username real, você precisaria de um endpoint no backend ou incluir o username no token.
-    // Por enquanto, vamos assumir que o user.id é o username (para fins de exibição).
-    setUserName(`Usuário ${userPayload.user.id.substring(0, 8)}...`); // Apenas um placeholder
+    setUserName(`Usuário ${userPayload.user.id.substring(0, 8)}...`); 
 
-    fetchLobbies(filters); // Busca lobbies ao carregar a página
+    fetchLobbies(filters);
   }, [navigate]);
 
   const fetchLobbies = async (currentFilters) => {
@@ -43,7 +37,7 @@ function Dashboard() {
     if (!token) return;
 
     let queryString = new URLSearchParams(currentFilters).toString();
-    queryString = queryString.replace(/\+/g, '%20'); // Ajusta espaços em branco na URL
+    queryString = queryString.replace(/\+/g, '%20'); 
 
     try {
       const response = await fetch(`http://localhost:5000/api/lobbies?${queryString}`, {
@@ -85,12 +79,12 @@ function Dashboard() {
       numPlayers: ''
     };
     setFilters(reset);
-    fetchLobbies(reset); // Busca lobbies sem filtros
+    fetchLobbies(reset); 
   };
 
   const handleLobbyCreated = () => {
-    setIsModalOpen(false); // Fecha o modal
-    fetchLobbies(filters); // Atualiza a lista de lobbies
+    setIsModalOpen(false); 
+    fetchLobbies(filters); 
   };
 
   const handleJoinLobby = async (lobbyId) => {
@@ -108,7 +102,7 @@ function Dashboard() {
 
       if (response.ok) {
         alert('Você entrou no lobby!');
-        fetchLobbies(filters); // Atualiza a lista
+        fetchLobbies(filters);
         navigate(`/lobby/${lobbyId}`);
       } else {
         const errorData = await response.json();
@@ -135,7 +129,7 @@ function Dashboard() {
 
       if (response.ok) {
         alert('Você saiu do lobby!');
-        fetchLobbies(filters); // Atualiza a lista
+        fetchLobbies(filters); 
       } else {
         const errorData = await response.json();
         alert(`Erro ao sair do lobby: ${errorData.msg}`);
@@ -164,7 +158,7 @@ function Dashboard() {
 
       if (response.ok) {
         alert('Lobby deletado com sucesso!');
-        fetchLobbies(filters); // Atualiza a lista
+        fetchLobbies(filters);
       } else {
         const errorData = await response.json();
         alert(`Erro ao deletar lobby: ${errorData.msg}`);

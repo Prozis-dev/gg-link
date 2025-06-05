@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Importar useNavigate
+import { useNavigate } from 'react-router-dom';
 import './PlayerOptionsMenu.css';
 
-// Adicione a nova prop onViewProfile
 function PlayerOptionsMenu({ player, onClose, onRate, onReport, onViewProfile }) {
   const [showRatingForm, setShowRatingForm] = useState(false);
   const [showReportForm, setShowReportForm] = useState(false);
@@ -10,8 +9,8 @@ function PlayerOptionsMenu({ player, onClose, onRate, onReport, onViewProfile })
   const [comment, setComment] = useState('');
   const [reportReason, setReportReason] = useState('');
   const [message, setMessage] = useState('');
-  const [messageType, setMessageType] = useState(''); // 'success' ou 'error'
-  const navigate = useNavigate(); // Hook para navegação
+  const [messageType, setMessageType] = useState(''); 
+  const navigate = useNavigate();
 
   const handleRatingSubmit = async () => {
     if (rating === 0) {
@@ -21,7 +20,7 @@ function PlayerOptionsMenu({ player, onClose, onRate, onReport, onViewProfile })
     }
     const success = await onRate(player._id, rating, comment, setMessage, setMessageType);
     if (success) {
-        setTimeout(() => onClose(), 1500); // Fecha após um pequeno delay em caso de sucesso
+        setTimeout(() => onClose(), 1500); 
     }
   };
 
@@ -33,14 +32,14 @@ function PlayerOptionsMenu({ player, onClose, onRate, onReport, onViewProfile })
     }
     const success = await onReport(player._id, reportReason, setMessage, setMessageType);
      if (success) {
-        setTimeout(() => onClose(), 1500); // Fecha após um pequeno delay em caso de sucesso
+        setTimeout(() => onClose(), 1500); 
     }
   };
 
   const handleViewProfileClick = () => {
-    if (onViewProfile) { // Verifica se a prop foi passada
+    if (onViewProfile) { 
       onViewProfile(player._id);
-    } else { // Fallback ou navegação direta se a prop não for passada (menos ideal)
+    } else { 
       navigate(`/profile/${player._id}`);
       onClose();
     }
@@ -75,9 +74,9 @@ function PlayerOptionsMenu({ player, onClose, onRate, onReport, onViewProfile })
                   key={star}
                   className={`star ${star <= rating ? 'filled' : ''}`}
                   onClick={() => setRating(star)}
-                  role="button" // Adicionado para acessibilidade
-                  tabIndex={0}  // Adicionado para acessibilidade
-                  onKeyDown={(e) => e.key === 'Enter' && setRating(star)} // Adicionado para acessibilidade
+                  role="button" 
+                  tabIndex={0}  
+                  onKeyDown={(e) => e.key === 'Enter' && setRating(star)} 
                 >
                   &#9733;
                 </span>

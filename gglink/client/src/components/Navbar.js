@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react'; // Adicionado useCallback
+import React, { useState, useEffect, useRef, useCallback } from 'react'; 
 import { Link, useNavigate } from 'react-router-dom';
 import './Navbar.css';
 
@@ -10,7 +10,7 @@ function Navbar() {
   const navigate = useNavigate();
   const dropdownRef = useRef(null);
 
-  const handleLogout = useCallback(() => { // Envolvido em useCallback
+  const handleLogout = useCallback(() => { 
     localStorage.removeItem('gglink_token');
     setIsLoggedIn(false);
     setUserName('');
@@ -33,41 +33,35 @@ function Navbar() {
             setUserName(data.user.username);
             setIsLoggedIn(true);
           } else {
-            // User data might be incomplete, or token valid but user deleted?
+            
             console.warn('Navbar: Usuário logado, mas nome de usuário não encontrado nos dados.', data);
-            setUserName('Usuário'); // Fallback
+            setUserName('Usuário'); 
             setIsLoggedIn(true);
           }
         } else {
           console.error('Navbar: Falha ao buscar dados do usuário (resposta não OK), limpando token.');
-          handleLogout(); // Se o token for inválido ou houver erro, desloga
+          handleLogout(); 
         }
       } catch (error) {
         console.error('Navbar: Erro de conexão ao buscar dados do usuário:', error);
-        // Não deslogar em erro de rede, mas manter o estado de carregamento/erro
-        // setUserName('Erro'); 
-        // setIsLoggedIn(true); // Mantém como logado se o token ainda existe, mas falhou a busca
       }
     } else {
       setIsLoggedIn(false);
       setUserName('');
     }
-  }, [handleLogout]); // Adicionado handleLogout como dependência
+  }, [handleLogout]); 
 
   useEffect(() => {
-    fetchAndSetUserData(); // Chamada inicial
+    fetchAndSetUserData();
 
     const handleAuthChange = () => {
-      fetchAndSetUserData(); // Re-busca dados ao mudar estado de auth
+      fetchAndSetUserData();
     };
-    
-    // Ouve o evento personalizado para mudanças de autenticação
+
     window.addEventListener('authChange', handleAuthChange);
-    // Ouve também o evento 'storage' para sincronizar entre abas (opcional, mas bom)
+
     window.addEventListener('storage', handleAuthChange);
 
-
-    // Fechar dropdown se clicar fora
     function handleClickOutside(event) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setShowDropdown(false);
@@ -80,7 +74,7 @@ function Navbar() {
       window.removeEventListener('storage', handleAuthChange);
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [fetchAndSetUserData]); // Agora fetchAndSetUserData é estável devido ao useCallback
+  }, [fetchAndSetUserData]);
 
   const toggleDropdown = () => setShowDropdown(!showDropdown);
   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);

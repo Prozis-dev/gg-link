@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import io from 'socket.io-client';
-import PlayerOptionsMenu from '../components/PlayerOptionsMenu'; // Reutiliza este componente
-import '../styles/CommunityDetailPage.css'; // Crie este CSS
+import PlayerOptionsMenu from '../components/PlayerOptionsMenu'; 
+import '../styles/CommunityDetailPage.css'; 
 
 const ENDPOINT = 'http://localhost:5000';
 
@@ -12,7 +12,7 @@ function CommunityDetailPage() {
   const [communityDetails, setCommunityDetails] = useState(null);
   const [messages, setMessages] = useState([]);
   const [messageInput, setMessageInput] = useState('');
-  const [currentMembers, setCurrentMembers] = useState([]); // Lista de membros da comunidade
+  const [currentMembers, setCurrentMembers] = useState([]); 
   const messagesEndRef = useRef(null);
   const socketRef = useRef(null);
 
@@ -33,7 +33,7 @@ function CommunityDetailPage() {
       return;
     }
 
-    // 1. Conectar ao Socket.IO com o token
+
     socketRef.current = io(ENDPOINT, {
       auth: {
         token: token
@@ -42,13 +42,12 @@ function CommunityDetailPage() {
 
     socketRef.current.on('connect', () => {
       console.log('Conectado ao Socket.IO da Comunidade!');
-      socketRef.current.emit('joinCommunity', communityId); // Entra na sala da comunidade
+      socketRef.current.emit('joinCommunity', communityId); 
     });
 
     socketRef.current.on('connect_error', (error) => {
       console.error('Erro de conexão Socket.IO na Comunidade:', error.message);
       alert('Não foi possível conectar ao chat da comunidade.');
-      // Opcional: navegar para lista de comunidades
     });
 
     socketRef.current.on('receiveCommunityMessage', (message) => {
@@ -62,7 +61,7 @@ function CommunityDetailPage() {
         message: data.message,
         timestamp: new Date().toISOString()
       }]);
-      fetchCommunityDetails(); // Atualiza a lista de membros
+      fetchCommunityDetails(); 
     });
 
     socketRef.current.on('communityUserLeft', (data) => {
@@ -72,7 +71,7 @@ function CommunityDetailPage() {
         message: data.message,
         timestamp: new Date().toISOString()
       }]);
-      fetchCommunityDetails(); // Atualiza a lista de membros
+      fetchCommunityDetails();
     });
 
     socketRef.current.on('communityError', (errorMsg) => {
@@ -81,7 +80,6 @@ function CommunityDetailPage() {
     });
 
 
-    // 2. Buscar detalhes da comunidade via API REST
     const fetchCommunityDetails = async () => {
       try {
         const response = await fetch(`http://localhost:5000/api/communities/${communityId}`, {
@@ -93,11 +91,11 @@ function CommunityDetailPage() {
         if (response.ok) {
           const data = await response.json();
           setCommunityDetails(data);
-          setCurrentMembers(data.members); // Inicializa a lista de membros
+          setCurrentMembers(data.members); 
         } else {
           console.error('Falha ao buscar detalhes da comunidade:', response.statusText);
           alert('Não foi possível carregar os detalhes da comunidade.');
-          navigate('/communities'); // Redireciona para a lista de comunidades
+          navigate('/communities'); 
         }
       } catch (error) {
         console.error('Erro de rede ao buscar detalhes da comunidade:', error);
@@ -108,10 +106,9 @@ function CommunityDetailPage() {
 
     fetchCommunityDetails();
 
-    // Limpeza ao desmontar o componente
     return () => {
       if (socketRef.current) {
-        socketRef.current.emit('leaveCommunity', communityId); // Avisa ao servidor que está saindo
+        socketRef.current.emit('leaveCommunity', communityId); 
         socketRef.current.disconnect();
       }
     };
@@ -144,7 +141,7 @@ function CommunityDetailPage() {
 
       if (response.ok) {
         alert('Você entrou na comunidade!');
-        fetchCommunityDetails(); // Atualiza a lista de membros
+        fetchCommunityDetails();
       } else {
         const errorData = await response.json();
         alert(`Erro ao entrar na comunidade: ${errorData.msg}`);
@@ -178,7 +175,7 @@ function CommunityDetailPage() {
           socketRef.current.emit('leaveCommunity', communityId);
           socketRef.current.disconnect();
         }
-        navigate('/communities'); // Redireciona para a lista de comunidades
+        navigate('/communities'); 
       } else {
         const errorData = await response.json();
         alert(`Erro ao sair da comunidade: ${errorData.msg}`);
@@ -191,13 +188,12 @@ function CommunityDetailPage() {
 
   const handlePlayerClick = (player) => {
     if (player._id === currentUserId) {
-        return; // Não permite clicar no próprio perfil para avaliar/denunciar
+        return; 
     }
     setSelectedPlayer(player);
     setShowPlayerOptionsMenu(true);
   };
 
-  // Funções de feedback (reutilizadas da LobbyPage, adaptadas)
   const handleRatePlayer = async (ratedUserId, stars, comment, setMessageCallback, setMessageTypeCallback) => {
     const token = localStorage.getItem('gglink_token');
     if (!token) {
@@ -213,7 +209,7 @@ function CommunityDetailPage() {
                 'Content-Type': 'application/json',
                 'x-auth-token': token,
             },
-            body: JSON.stringify({ ratedUser: ratedUserId, lobbyId: null, // Comunidade não tem lobby ID aqui
+            body: JSON.stringify({ ratedUser: ratedUserId, lobbyId: null, 
                                    stars, comment }),
         });
 
@@ -250,7 +246,7 @@ function CommunityDetailPage() {
                 'Content-Type': 'application/json',
                 'x-auth-token': token,
             },
-            body: JSON.stringify({ reportedUser: reportedUserId, lobbyId: null, // Comunidade não tem lobby ID aqui
+            body: JSON.stringify({ reportedUser: reportedUserId, lobbyId: null, 
                                    reason }),
         });
 
@@ -362,7 +358,7 @@ function CommunityDetailPage() {
       {showPlayerOptionsMenu && selectedPlayer && (
         <PlayerOptionsMenu
           player={selectedPlayer}
-          lobbyId={null} // Não há lobby aqui, passamos null
+          lobbyId={null} 
           currentUserId={currentUserId}
           onClose={() => setShowPlayerOptionsMenu(false)}
           onRate={handleRatePlayer}
