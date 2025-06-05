@@ -1,0 +1,183 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+}
+
+html,body{
+    width:100%;
+    height: 100%;
+    margin:0;
+    padding: 0;
+}
+
+main,.profile-container{
+    padding-top:60px;
+}
+.page-container{
+    min-height: 100vh;
+    font-family: 'Segoe UI', sans-serif;
+    z-index:0;
+}
+
+
+.topbar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width:100vw;
+    height: 60px;
+    background-color: #4C3B69;
+    padding:12px 24px;
+    color:white;
+    top:0; 
+    left:0;
+    gap: 15px;
+    position:fixed;
+    z-index: 999;
+
+}
+
+.profile-logo{
+    height:40px;
+    object-fit:contain;
+   
+   
+}
+
+.communities-btn{
+    background-color: #a085f9;
+    color:#1d1238;
+    border:none;
+    padding:8px 16px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor:pointer;
+
+
+}
+
+.user-info{
+    display:flex;
+    align-items: center;
+    gap:10px;
+}
+
+.user-avatar{
+    width:36px;
+    height:36px;
+    border-radius: 50%;
+    object-fit: cover;
+    border:2px solid #fff;
+}
+
+.profile-container{
+    display:flex;
+    justify-content: center;
+    padding:40px 20px;
+    align-items: center;
+    min-height: 100vh;
+
+}
+
+.profile-card{
+   background-color: transparent;
+   padding:0;
+   border:none;
+   box-shadow: none;
+   width:80%;
+   margin: 0 auto;
+   border-radius: 12px;
+}
+
+.profile-header {
+    background-color: #3f2a5a;
+    color:white;
+    padding:10px 20px;
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 10px 10px 0 0;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+
+.profile-title {
+    color: white;
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.close-button {
+    background: none;
+    border: none;
+    color: #ff4d4d;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.profile-body {
+  display: flex;
+  background: white;
+  border-radius: 0 0 10px 10px;
+  overflow: hidden;
+}
+
+.profile-sidebar{
+    background-color: #555;
+    color: white;
+    padding: 20px;
+    width: 200px;
+}
+
+.profile-sidebar h3{
+    margin-bottom: 20px;
+}
+
+.menu-list{
+    list-style: none;
+    padding:0;
+}
+
+.menu-list li{
+    margin:12px 0;
+    cursor:pointer;
+    transition: color 0.3s;
+}
+
+.menu-list.active,.menu-list:hover{
+    color:#d9d9ff;
+}
+
+.profile-content{
+    flex:1;
+    background-color: #B39DDB;
+    color:white;
+    padding: 32px;
+    
+}
+
+.profile-content h2{
+    margin-bottom: 12px;
+    font-size:2rem;
+    font-weight: bold;
+}
+
+.profile-image{
+    width:140px;
+    height:140px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 20px;
+}
+
+.profile-info p{
+    margin: 6px 0;
+}
+
+.friends{
+    background-color: rgba(255,255,255,0.15);
+    padding:8px;
+    border-radius: 8px;
+    width: fit-content;
+}
