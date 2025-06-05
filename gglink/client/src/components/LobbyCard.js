@@ -1,6 +1,6 @@
 // client/src/components/LobbyCard.js
 import React from 'react';
-import { Link } from 'react-router-dom'; // Importe Link
+import { Link } from 'react-router-dom';
 import './LobbyCard.css';
 
 function LobbyCard({ lobby, onJoin, onLeave, onDelete, currentUserId }) {

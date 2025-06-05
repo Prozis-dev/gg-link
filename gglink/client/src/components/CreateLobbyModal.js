@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './CreateLobbyModal.css'; // Crie este CSS
+import './CreateLobbyModal.css'; 
 
 function CreateLobbyModal({ isOpen, onClose, onCreate }) {
   const [formData, setFormData] = useState({
@@ -7,7 +7,7 @@ function CreateLobbyModal({ isOpen, onClose, onCreate }) {
     game: '',
     mode: '',
     description: '',
-    maxPlayers: 2, // Default para mínimo de jogadores
+    maxPlayers: 2, 
     skillLevel: 'Qualquer',
     imageUrl: ''
   });
@@ -23,7 +23,7 @@ function CreateLobbyModal({ isOpen, onClose, onCreate }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validação básica
+ 
     if (!formData.name || !formData.game || !formData.mode || !formData.maxPlayers) {
       setMessage('Nome, Jogo, Modo e Capacidade Máxima são obrigatórios.');
       setMessageType('error');
@@ -57,7 +57,7 @@ function CreateLobbyModal({ isOpen, onClose, onCreate }) {
       if (response.ok) {
         setMessage(data.msg || 'Lobby criado com sucesso!');
         setMessageType('success');
-        // Resetar formulário
+ 
         setFormData({
           name: '',
           game: '',
@@ -67,10 +67,10 @@ function CreateLobbyModal({ isOpen, onClose, onCreate }) {
           skillLevel: 'Qualquer',
           imageUrl: ''
         });
-        // Chamar a função para atualizar a lista no Dashboard e fechar o modal
+  
         setTimeout(() => {
           onCreate();
-          setMessage(''); // Limpa mensagem após fechar
+          setMessage('');
         }, 1500);
       } else {
         setMessage(data.msg || 'Erro ao criar lobby.');

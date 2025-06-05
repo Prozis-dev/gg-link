@@ -81,7 +81,7 @@
 }
 
 .modal-content textarea {
-  resize: vertical; /* Permite redimensionar verticalmente */
+  resize: vertical; 
   min-height: 80px;
 }
 
@@ -92,7 +92,6 @@
   font-size: 1em;
 }
 
-/* Reutilizando as classes de mensagem do Auth.css */
 .modal-content .message {
   margin-bottom: 15px;
   font-size: 0.95em;
