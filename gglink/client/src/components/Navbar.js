@@ -95,7 +95,7 @@ function Navbar() {
       <div className="navbar-logo">
         <Link to="/" onClick={closeMobileMenuAndDropdown}>GGLink</Link>
       </div>
-      <div className="navbar-hamburger" onClick={toggleMobileMenu}>
+      <div className="navbar-hamburger" onClick={toggleMobileMenu} role="button" aria-label="Abrir menu de navegação">
         <i className={isMobileMenuOpen ? 'fas fa-times' : 'fas fa-bars'}></i>
       </div>
       <ul className={`navbar-links ${isMobileMenuOpen ? 'active' : ''}`}>
@@ -108,13 +108,13 @@ function Navbar() {
             <li><Link to="/dashboard" onClick={closeMobileMenuAndDropdown}>Lobbies</Link></li>
             <li><Link to="/communities" onClick={closeMobileMenuAndDropdown}>Comunidades</Link></li>
             <li className="navbar-user-dropdown" ref={dropdownRef}>
-              <button onClick={toggleDropdown} className="navbar-username-button">
+              <button type="button" onClick={toggleDropdown} className="navbar-username-button">
                 {userName || 'Carregando...'} <i className={`fas fa-caret-down ${showDropdown ? 'open' : ''}`}></i>
               </button>
               {showDropdown && (
                 <ul className={`dropdown-menu ${showDropdown ? 'show-dropdown' : ''}`}>
                   <li><Link to="/profile" onClick={closeMobileMenuAndDropdown}>Ver Perfil</Link></li>
-                  <li><button onClick={() => { handleLogout(); closeMobileMenuAndDropdown(); }}>Logout</button></li>
+                  <li><button type="button" onClick={() => { handleLogout(); closeMobileMenuAndDropdown(); }}>Logout</button></li>
                 </ul>
               )}
             </li>
